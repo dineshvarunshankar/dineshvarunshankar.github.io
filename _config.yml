@@ -1,0 +1,57 @@
+title: Dinesh Varun Shankar
+first_name: Dinesh
+middle_name: Varun
+last_name: Shankar
+email: dkandiya@andrew.cmu.edu
+description: M.S. Research Student in Mechanical Engineering at Carnegie Mellon University.
+footer_text: >
+  Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme. Hosted by <a href="https://pages.github.com/">GitHub Pages</a>.
+keywords: academic-website portfolio research
+lang: en
+icon: fa-solid fa-user
+
+url: "https://dineshvarunshankar.github.io"
+baseurl: ""
+last_updated: false
+back_to_top: true
+navbar_fixed: true
+max_width: 930px
+search_enabled: true
+
+remote_theme: alshedivat/al-folio@v0.14.7
+plugins:
+  - jekyll-remote-theme
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jemoji
+  - jekyll-scholar
+  - jekyll-socials
+
+paginate: 5
+paginate_path: /blog/page:num/
+
+socials:
+  email: dkandiya@andrew.cmu.edu
+  github_username: dineshvarunshankar
+  linkedin_username: dineshvarunshankar
+  twitter_username: DineshVarunS
+  scholar_userid: ""
+  orcid_id: ""
+  rss_icon: true
+
+collections:
+  news:
+    defaults:
+      layout: post
+    output: true
+  projects:
+    output: true
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: page
+      permalink: /blog/:year/:title/
