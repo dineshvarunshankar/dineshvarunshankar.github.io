@@ -1,77 +1,95 @@
----
-layout: default
----
-<link rel="stylesheet" href="{{ '/assets/css/portfolio.css' | relative_url }}">
-<div class="academic-portfolio">
-  {% assign portfolio = site.data.portfolio %}
-  {% if portfolio.preview %}
-    <p class="portfolio-note">Layout preview · Publication and project entries are placeholders.</p>
-  {% endif %}
-  <header class="portfolio-intro">
-    <div>
-      <h1>{{ site.title | escape }}</h1>
-      <p class="portfolio-meta">{{ page.subtitle | escape }}</p>
-      <div class="portfolio-bio">{{ content }}</div>
-      <nav class="portfolio-links" aria-label="Contact and profiles">
-        <a href="{{ '/cv/' | relative_url }}">CV</a>
-        {% if site.email %}<a href="mailto:{{ site.email | escape }}">Email</a>{% endif %}
-        {% if site.socials.github_username %}<a href="https://github.com/{{ site.socials.github_username | escape }}">GitHub</a>{% endif %}
-        {% if site.socials.linkedin_username %}<a href="https://www.linkedin.com/in/{{ site.socials.linkedin_username | escape }}/">LinkedIn</a>{% endif %}
-        {% if site.socials.scholar_userid != blank %}<a href="https://scholar.google.com/citations?user={{ site.socials.scholar_userid | escape }}">Google Scholar</a>{% endif %}
-      </nav>
-    </div>
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ site.title | escape }}</title>
+    <meta name="author" content="{{ site.title | escape }}">
+    <meta name="description" content="{{ site.description | strip_html | strip | escape }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta property="og:title" content="{{ site.title | escape }}">
+    <meta property="og:description" content="{{ site.description | strip_html | strip | escape }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ '/' | absolute_url }}">
     {% if page.profile.image %}
-      <img class="portfolio-portrait" src="{{ page.profile.image | prepend: '/assets/img/' | relative_url }}" alt="{{ site.title | escape }}" width="160" height="160">
+    <meta property="og:image" content="{{ page.profile.image | prepend: '/assets/img/' | absolute_url }}">
     {% endif %}
-  </header>
-  <nav class="portfolio-links portfolio-sections" aria-label="Portfolio sections">
-    {% if site.news.size > 0 %}<a href="#portfolio-news">News</a>{% endif %}
-    {% for section in portfolio.sections %}
-      {% if section.entries.size > 0 %}<a href="#portfolio-{{ section.id | escape }}">{{ section.title | escape }}</a>{% endif %}
-    {% endfor %}
-  </nav>
-  {% if site.news.size > 0 %}
-    <section id="portfolio-news">
-      <h2>News</h2>
-      <ul class="portfolio-news">
+    <link rel="canonical" href="{{ '/' | absolute_url }}">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" type="text/css" href="{{ '/assets/css/barron.css' | relative_url }}">
+  </head>
+  <body>
+    <!-- Adapted from https://github.com/jonbarron/jonbarron.github.io -->
+    <main class="page">
+      <header class="bio">
+        <div class="bio-text">
+          <h1 class="name">{{ site.title | escape }}</h1>
+          {{ content }}
+          <p class="bio-links">
+            {% if site.email %}<a href="mailto:{{ site.email | escape }}">Email</a> &nbsp;/&nbsp;{% endif %}
+            <a href="{{ '/cv/' | relative_url }}">CV</a>
+            {% if site.socials.scholar_userid != blank %} &nbsp;/&nbsp; <a href="https://scholar.google.com/citations?user={{ site.socials.scholar_userid | escape }}">Scholar</a>{% endif %}
+            {% if site.socials.linkedin_username %} &nbsp;/&nbsp; <a href="https://www.linkedin.com/in/{{ site.socials.linkedin_username | escape }}/">LinkedIn</a>{% endif %}
+            {% if site.socials.github_username %} &nbsp;/&nbsp; <a href="https://github.com/{{ site.socials.github_username | escape }}">GitHub</a>{% endif %}
+          </p>
+        </div>
+        {% if page.profile.image %}
+        <div class="bio-photo">
+          <a href="{{ page.profile.image | prepend: '/assets/img/' | relative_url }}"><img src="{{ page.profile.image | prepend: '/assets/img/' | relative_url }}" alt="{{ site.title | escape }}"></a>
+        </div>
+        {% endif %}
+      </header>
+
+      {% if site.news.size > 0 %}
+      <section class="section-header" id="news">
+        <h2>News</h2>
         {% assign news = site.news | sort: 'date' | reverse %}
         {% for item in news limit: 5 %}
-          <li><time datetime="{{ item.date | date: '%Y-%m-%d' }}">{{ item.date | date: '%b %Y' }}</time><div>{{ item.content | markdownify }}</div></li>
-        {% endfor %}
-      </ul>
-    </section>
-  {% endif %}
-  {% for section in portfolio.sections %}
-    {% if section.entries.size > 0 %}
-      <section id="portfolio-{{ section.id | escape }}">
-        <h2>{{ section.title | escape }}</h2>
-        {% for entry in section.entries %}
-          <article class="portfolio-entry{% if entry.media or entry.media_placeholder %} portfolio-entry-media{% endif %}{% if entry.featured %} portfolio-featured{% endif %}">
-            {% if entry.media %}
-              <img class="portfolio-thumbnail" src="{{ entry.media | relative_url }}" alt="{{ entry.media_alt | escape }}" loading="lazy">
-            {% elsif entry.media_placeholder %}
-              <div class="portfolio-placeholder">{{ entry.media_placeholder | escape }}</div>
-            {% endif %}
-            <div>
-              {% if entry.category %}<span class="portfolio-tag">{{ entry.category | escape }}</span>{% endif %}
-              <h3>{{ entry.title | escape }}</h3>
-              {% if entry.authors %}<div class="portfolio-meta">{{ entry.authors | markdownify }}</div>{% endif %}
-              {% if entry.meta %}<p class="portfolio-meta">{{ entry.meta | escape }}</p>{% endif %}
-              {% if entry.description %}<div>{{ entry.description | markdownify }}</div>{% endif %}
-              {% if entry.links.size > 0 %}
-                <div class="portfolio-links">
-                  {% for link in entry.links %}
-                    {% assign first_character = link.url | slice: 0 %}
-                    {% if first_character == '/' %}{% assign resource_url = link.url | relative_url %}{% else %}{% assign resource_url = link.url %}{% endif %}
-                    <a href="{{ resource_url | escape }}">{{ link.label | escape }}</a>
-                  {% endfor %}
-                </div>
-              {% endif %}
-            </div>
-          </article>
+        <p><time datetime="{{ item.date | date: '%Y-%m-%d' }}">{{ item.date | date: '%b %Y' }}</time> &mdash; {{ item.content | markdownify | remove: '<p>' | remove: '</p>' }}</p>
         {% endfor %}
       </section>
-    {% endif %}
-  {% endfor %}
-  <p class="portfolio-credit">Homepage layout inspired by <a href="https://jonbarron.info/">Jon Barron</a>.</p>
-</div>
+      {% endif %}
+
+      {% for section in site.data.portfolio.sections %}
+      {% if section.entries.size > 0 %}
+      <section id="{{ section.id | escape }}" aria-labelledby="{{ section.id | escape }}-heading">
+        <div class="section-header">
+          <h2 id="{{ section.id | escape }}-heading">{{ section.title | escape }}</h2>
+          {% if section.description %}<p>{{ section.description | escape }}</p>{% endif %}
+        </div>
+        <div class="papers">
+          {% for entry in section.entries %}
+          <article class="{% if entry.media %}paper{% else %}section-header{% endif %}">
+            {% if entry.media %}
+            <div class="paper-media">
+              <img src="{{ entry.media | relative_url }}" alt="{{ entry.media_alt | default: entry.title | escape }}" loading="lazy">
+            </div>
+            {% endif %}
+            <div{% if entry.media %} class="paper-info"{% endif %}>
+              <span class="papertitle">{{ entry.title | escape }}</span>
+              {% if entry.authors %}<div class="paper-authors">{{ entry.authors | markdownify | remove: '<p>' | remove: '</p>' }}</div>{% endif %}
+              {% if entry.meta %}<div class="paper-venue">{{ entry.meta | escape }}</div>{% endif %}
+              {% if entry.links.size > 0 %}
+              <div class="paper-links">
+                {% for link in entry.links %}
+                {% assign first_character = link.url | slice: 0 %}
+                {% if first_character == '/' %}{% assign resource_url = link.url | relative_url %}{% else %}{% assign resource_url = link.url %}{% endif %}
+                <a href="{{ resource_url | escape }}">{{ link.label | escape }}</a>{% unless forloop.last %} / {% endunless %}
+                {% endfor %}
+              </div>
+              {% endif %}
+              {% if entry.description %}<div class="paper-desc">{{ entry.description | markdownify }}</div>{% endif %}
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+      {% endfor %}
+
+      <footer class="site-footer">
+        <p>Website template by <a href="https://jonbarron.info/">Jon Barron</a>. <a href="https://github.com/jonbarron/jonbarron.github.io">Source code</a>.</p>
+      </footer>
+    </main>
+  </body>
+</html>

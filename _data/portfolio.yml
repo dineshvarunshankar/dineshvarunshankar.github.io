@@ -1,30 +1,24 @@
-# Set preview to false after replacing all placeholder entries.
-# Empty sections are omitted from both the homepage and section navigation.
-preview: true
+# Empty sections are omitted. Replace the clearly marked sample entries with your work.
 sections:
   - id: publications
     title: Publications
     entries:
-      - title: Publication title
+      - title: Publication title (placeholder)
         authors: 'Author One, **Dinesh Varun Shankar**, Author Three'
         meta: Venue · Year
         description: Contribution summary. Replace this placeholder with the actual paper.
         links: []
   - id: research
     title: Research Projects
+    description: Efficient UAV exploration in SWaP-constrained disaster-response environments and vision-language reasoning for triage assessment.
     entries:
-      - title: Research project title
-        category: Featured research
-        featured: true
-        media_placeholder: Video poster
+      - title: Research project title (placeholder)
         description: Problem, individual contribution, and observed result.
         links: []
   - id: projects
     title: Selected Projects
     entries:
-      - title: Course project title
-        category: Course project
-        media_placeholder: Demo preview
+      - title: Course project title (placeholder)
         description: Brief description of the work and what the demo shows.
         links: []
   - id: experience
@@ -35,13 +29,13 @@ sections:
   - id: teaching
     title: Teaching
     entries:
-      - title: Course title
+      - title: Course title (placeholder)
         meta: Teaching role · Institution · Term
         description: Teaching responsibilities to be added.
   - id: service
     title: Academic Service
     entries:
-      - title: Reviewer · Conference or exact workshop name
+      - title: Reviewer · Conference or exact workshop name (placeholder)
         meta: Year
   - id: talks
     title: Talks & Presentations
