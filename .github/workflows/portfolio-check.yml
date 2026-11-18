@@ -1,0 +1,26 @@
+name: Check portfolio
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: portfolio-check-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+      - name: Build Jekyll site
+        run: bundle exec jekyll build --trace
+      - name: Upload site for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-preview
+          path: _site
+          retention-days: 7

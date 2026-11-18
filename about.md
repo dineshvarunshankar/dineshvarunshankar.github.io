@@ -1,5 +1,5 @@
 ---
-layout: about
+layout: portfolio
 title: about
 permalink: /
 subtitle: M.S. Research Student in Mechanical Engineering at Carnegie Mellon University
