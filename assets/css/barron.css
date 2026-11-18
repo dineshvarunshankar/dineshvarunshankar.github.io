@@ -429,7 +429,18 @@ h2 {
   }
 }
 
-/* Portfolio customization: section heading color. */
+/* Portfolio customizations. */
 h2 {
-  color: #1967d2;
+  color: #6f42c1;
+  font-weight: 700;
+}
+
+.page {
+  max-width: 1200px;
+}
+
+.bio-photo img {
+  aspect-ratio: 1 / 1;
+  max-width: 280px;
+  margin-inline: auto;
 }
